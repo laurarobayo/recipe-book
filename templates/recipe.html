@@ -36,6 +36,7 @@
 
       <div class="actions">
         <a href="{{ url_for('index') }}" class="btn btn-secondary">← Back</a>
+        <a href="{{ url_for('edit_recipe', recipe_id=recipe._id) }}" class="btn btn-primary">Edit Recipe</a>
         <button class="btn btn-danger" onclick="document.getElementById('confirm').classList.add('active')">
           Delete Recipe
         </button>

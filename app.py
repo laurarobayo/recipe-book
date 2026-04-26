@@ -28,7 +28,6 @@ def add_recipe():
     if request.method == "POST":
         name = request.form.get("name")
         instructions = request.form.get("instructions")
-
         items = request.form.getlist("ingredient_item")
         amounts = request.form.getlist("ingredient_amount")
         ingredients = [
@@ -36,15 +35,38 @@ def add_recipe():
             for item, amount in zip(items, amounts)
             if item.strip()
         ]
-
         recipes.insert_one({
             "name": name,
             "ingredients": ingredients,
             "instructions": instructions
         })
         return redirect(url_for("index"))
-
     return render_template("add.html")
+
+
+@app.route("/edit/<recipe_id>", methods=["GET", "POST"])
+def edit_recipe(recipe_id):
+    recipe = recipes.find_one({"_id": ObjectId(recipe_id)})
+    if request.method == "POST":
+        name = request.form.get("name")
+        instructions = request.form.get("instructions")
+        items = request.form.getlist("ingredient_item")
+        amounts = request.form.getlist("ingredient_amount")
+        ingredients = [
+            {"item": item, "amount": amount}
+            for item, amount in zip(items, amounts)
+            if item.strip()
+        ]
+        recipes.update_one(
+            {"_id": ObjectId(recipe_id)},
+            {"$set": {
+                "name": name,
+                "ingredients": ingredients,
+                "instructions": instructions
+            }}
+        )
+        return redirect(url_for("view_recipe", recipe_id=recipe_id))
+    return render_template("edit.html", recipe=recipe)
 
 
 @app.route("/delete/<recipe_id>", methods=["POST"])
