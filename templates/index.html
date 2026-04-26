@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe Book</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <header>
+    <h1>Recipe <span>Book</span></h1>
+    <nav>
+      <a href="{{ url_for('add_recipe') }}">+ Add Recipe</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2 class="page-title">All Recipes</h2>
+    <p class="page-subtitle">{{ recipes|length }} recipe{{ 's' if recipes|length != 1 else '' }} saved</p>
+
+    {% if recipes %}
+      <div class="recipe-grid">
+        {% for recipe in recipes %}
+          <a href="{{ url_for('view_recipe', recipe_id=recipe._id) }}" class="recipe-card">
+            <h2>{{ recipe.name }}</h2>
+            <span class="ingredient-count">{{ recipe.ingredients|length }} ingredient{{ 's' if recipe.ingredients|length != 1 else '' }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="empty-state">
+        <p>No recipes yet — add your first one!</p>
+        <a href="{{ url_for('add_recipe') }}" class="btn btn-primary">Add a Recipe</a>
+      </div>
+    {% endif %}
+  </main>
+</body>
+</html>
