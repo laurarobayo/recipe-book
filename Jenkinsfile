@@ -25,10 +25,7 @@ pipeline {
         stage('Verify') {
             steps {
                 echo 'Running unit tests...'
-                sh '''
-                    pip install flask pymongo pytest --quiet
-                    pytest tests/ -v
-                '''
+                sh 'docker run --rm ${IMAGE_NAME}:latest python -m pytest tests/ -v'
             }
         }
 
