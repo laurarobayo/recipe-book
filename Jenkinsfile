@@ -35,8 +35,8 @@ pipeline {
                 sh 'docker stop ${CONTAINER_NAME} || true'
                 sh 'docker rm ${CONTAINER_NAME} || true'
 
-                echo 'Starting updated container with Docker Compose...'
-                sh 'docker compose up -d --build'
+                echo 'Starting updated container...'
+                sh 'docker run -d --name ${CONTAINER_NAME} -p 5000:5000 -e MONGO_URI=mongodb://mongo:27017/ ${IMAGE_NAME}:latest'
 
                 echo 'App is live at http://localhost:5000'
             }
