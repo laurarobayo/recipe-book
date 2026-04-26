@@ -36,7 +36,11 @@ pipeline {
                 sh 'docker rm ${CONTAINER_NAME} || true'
 
                 echo 'Starting updated container...'
-                sh 'docker run -d --name ${CONTAINER_NAME} -p 5000:5000 -e MONGO_URI=mongodb://mongo:27017/ ${IMAGE_NAME}:latest'
+                sh 'docker network create recipe-network || true'
+                sh 'docker run -d --name ${CONTAINER_NAME} --network recipe-network -p 5000:5000 -e MONGO_URI=mongodb://mongo:27017/ ${IMAGE_NAME}:latest'
+
+                echo 'Making sure MongoDB is on the network...'
+                sh 'docker network connect recipe-network mongo || true'
 
                 echo 'App is live at http://localhost:5000'
             }
