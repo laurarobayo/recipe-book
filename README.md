@@ -17,10 +17,12 @@ A Flask web app for saving and managing recipes.
 
 ### Clone the repo
 git clone https://github.com/laurarobayo/recipe-book.git
+
 cd recipe-book
 
 ### Start the app
 docker compose up --build
+
 Visit the app at http://localhost:5000
 
 ### Stop the app
