@@ -9,13 +9,21 @@ services:
       - MONGO_URI=mongodb://mongo:27017/
     depends_on:
       - mongo
+    network:
+      - recipe-network
     restart: unless-stopped
 
   mongo:
     image: mongo:7
     volumes:
       - mongo_data:/data/db
+    networks:
+      - recipe-network
     restart: unless-stopped
+
+networks:
+  recipe-network:
+    driver: bridge
 
 volumes:
   mongo_data:
