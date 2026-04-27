@@ -13,11 +13,15 @@ A Flask web app for saving and managing recipes.
 
 ### Prerequisites
 - Docker & Docker Compose installed
+- Git
+
+### Clone the repo
+git clone https://github.com/laurarobayo/recipe-book.git
+cd recipe-book
 
 ### Start the app
 docker compose up --build
-
-Visit http://localhost:5000
+Visit the app at http://localhost:5000
 
 ### Stop the app
 docker compose down
@@ -25,5 +29,6 @@ docker compose down
 ## Features
 - View all saved recipes
 - Add a recipe with ingredients and instructions
-- View a single recipe
+- View a recipe
 - Delete a recipe
+- Edit a recipe
